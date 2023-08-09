@@ -4,7 +4,7 @@ Small project I've made this week due to sudden electricity interupption, There'
 
 ## Downloading the program ⬇️
  To download the program, Clicking the **MEGA** badge and it will redirect you to with the latest release and update of the program.
-  [![ MEGA](https://img.shields.io/badge/_MEGA-DC143C?logo=mega)](https://mega.nz/folder/DVFkkADa#t_pPsJ_U09KhNlnujVt-wQ)
+  [![ MEGA](https://img.shields.io/badge/_MEGA-DC143C?logo=mega)](https://mega.nz/file/aI1j0SpR#9tA-jrBK9ZSjGPH7ic05k6UXiYKd5gRVH65DDLiNDzM)
 
 ## Developer Notes 🗒️
 A very short message from me, thank you for starring and checking this program I've made. 
