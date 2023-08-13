@@ -1,11 +1,6 @@
 #include "GetCustomerOrder.h"
 #include <iostream>
 
-template <class K, class U, class I>
-
-K addThisToAmountOfProduct(K a, U b, I c){
-    return a*b+c;
-};
 
 class customerEnty: public shopEnty{
 

@@ -2,6 +2,11 @@
 #define GETCUSTOMERORDER_H
 #include <iostream>
 
+template <class K, class U, class I>
+
+K addThisToAmountOfProduct(K a, U b, I c){
+    return a*b+c;
+};
 
 // # Main class for getting customer order
 
