@@ -1,11 +1,6 @@
+#include "master.h"
 #include <iostream>
 #include <cstdio>
-
-template <class K, class U>
-K getAdmissionFeeFromCustomer(K a, U b){
-    return a+b;
-};
-
 
 enum customerItem {
     Aqua = 0,
@@ -14,128 +9,67 @@ enum customerItem {
 };
 
 
-class shopEnty{
-protected:
-    std::string itemName;
-    std::string ticketOrderStatus;
-    double itemPrice;
-
-    double productCost;
-    double admissionFee;
-public:
-
-    void setCustomerItemName(std::string x){itemName=x;}
-    void setCustomerItemPrice(double y){itemPrice=y; }
-    void setCustomerTicketStatus(std::string q){ticketOrderStatus=q; }
-    void setCustomerProductCost(double a){productCost=a; }
-    void setGiveCustomerAdmissionFee(double b){admissionFee=b; }
-
-    virtual void customerObj()=0;
-};
-class customerEnty: public shopEnty{
-
-public:
-
-    void customerObj(){
-
-    std::cout << "\n{---------------------------------------}\n" << '\n';
-    std::cout << "Ticket order status:          \n" << "\n# " << ticketOrderStatus << "\n" << '\n';
-    std::cout << "Bought Product:              \n" << "\n* " << itemName << "\n" << '\n';
-    std::cout << "Product cost:                 " << "$" << itemPrice << '\n';
-    std::cout << "Total cost + admissionFee:    " << "$" << getAdmissionFeeFromCustomer(productCost, admissionFee) << '\n';
-    std::cout << "\n{---------------------------------------}\n" << '\n';
-    }
-
-};
-
-
-class customerDisplayEnty{
-
-protected:
-    std::string foodsDisplayed;
-public:
-
-    void setFoodsDisplayed(std::string a){
-        foodsDisplayed=a;
-    }
-
-    virtual void boardRedit()=0;
-
-};
-class shopDisplayedEnty: public customerDisplayEnty{
-
-public:
-
-    void boardRedit() {
-
-        std::cout << "\n{================  *MENU*  ================}\n" << '\n';
-        std::cout << "          [ Water ]\n" << '\n';
-        std::cout << "          [ Breakfast ]\n" << '\n';
-        std::cout << "          [ Soda ]" << '\n';
-        std::cout << "\n{==========================================}\n" << '\n';
-    }
-
-
-};
-
-
 int main() {
 
 
-    // # Display board products variables
+        /// # Display board products variables
 
 
     std::string customerChoice;
-    std::string Water("Water");
-    std::string Breakfast("Breakfast");
-    std::string Soda("Soda");
+    const std::string Water("Water");
+    const std::string Breakfast("Breakfast");
+    const std::string Soda("Soda");
 
 
-    // # Exit program variables
+        /// # Exit program variables
 
 
-    std::string n("n");
-    std::string y("y");
+    const std::string n("n");
+    const std::string y("y");
+    const std::string x("x");
     std::string cco;
     std::string close2ForProgram;
-    std::string x("x");
 
 
-    // # Cost of products with fee variables
+        /// # Cost of products with fee variables
 
 
-    double productCost;
-    double admissionFee = 1.17;
-    double waterFee = 2.04;
-    double drinksFee = 3.19;
-    double breakFastFee = 12.53;
+    const double admissionFee = 1.17;
+    const double waterFee = 2.04;
+    const double drinksFee = 3.19;
+    const double breakFastFee = 12.53;
 
 
-    // # Display Shop foods & drinks config
+        /// # Customer product amount bought variables
 
 
-    shopDisplayedEnty shopDisplay;
-
-    customerDisplayEnty *shopDisplayPerma = &shopDisplay;
-
-    shopDisplay. boardRedit();
+    int productAmountSet;
 
 
-    // # Customer get selected order config
-    // ## If you want to change product name =>     customerReciept1->setCustomerItemName("Water Bottle");
-    // ### If you want to change product price =>   customerReciept1->setCustomerItemPrice(2.04);
+        /// # Display Shop foods & drinks config
 
 
-    customerEnty customer1;
+        shopDisplayedEnty displayThis;
 
-    shopEnty *customerReciept1 = &customer1;
+        displayThis. boardRedit();
+
+
+        /// # Customer get selected order config
+        /// ## If you want to change product name =>     customerReciept1->setCustomerItemName("Water Bottle");
+        /// ### If you want to change product price =>   customerReciept1->setCustomerItemPrice(2.04);
+
+
+        customerEnty customer1;
+
+        shopEnty *customerReciept1 = &customer1;
 
         customerItem shopEnty = {};
 
         do{
 
+        try{
         std::cout << "Select your order: " << '\n';
-        std::cin >> customerChoice;
+        std::getline(std::cin, customerChoice);
 
         if(customerChoice == Water){
             shopEnty = Aqua;
@@ -148,46 +82,76 @@ int main() {
         };
 
             if(customerChoice != Water && customerChoice != Breakfast && customerChoice != Soda){
-            std::cout << "[ " << customerChoice << " ] is not in stocked!, unavailable product" << '\n';
+                throw 0;
             };
 
-        continue;
+        }catch(...){
+            std::cout << "[ " << customerChoice << " ] is not in stocked!, unavailable product" << '\n';
+        }
 
         }while(customerChoice != Water && customerChoice != Breakfast && customerChoice != Soda);
 
-                switch(shopEnty){
+        /// # Get customer order amount
 
-                case Aqua:
-                    customerReciept1->setCustomerItemName("Water Bottle");
-                    customerReciept1->setCustomerItemPrice(2.04);
-                    customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
-                    customerReciept1->setCustomerProductCost(waterFee);
-                    customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
-                    customer1. customerObj();
+            do{
+            std::cout << "Enter order amount: ";
+            std::cin >> productAmountSet;
+
+            if(productAmountSet <= 0 || productAmountSet >= 100){
+                std::cout << "**********************************\n" << '\n';
+                std::cout << "Invalid amount entered; try again\n" << '\n';
+            }
+
+                else{
+
+                    switch(shopEnty){
+
+                    case Aqua:
+                        customerReciept1->setCustomerItemName("Water Bottle");
+                        customerReciept1->setCustomerItemPrice(waterFee);
+                        customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
+                        customerReciept1->setCustomerProductCost(waterFee);
+                        customerReciept1->setProductAmount(productAmountSet);
+                        customerReciept1->setProductAmountWithCost(waterFee);
+                        customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
+
+                        customer1. customerObj();
                     break;
-                case Foods:
-                    customerReciept1->setCustomerItemName("Eggs and Bacon");
-                    customerReciept1->setCustomerItemPrice(12.53);
-                    customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
-                    customerReciept1->setCustomerProductCost(breakFastFee);
-                    customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
-                    customer1. customerObj();
+                    case Foods:
+                        customerReciept1->setCustomerItemName("Eggs and Bacon");
+                        customerReciept1->setCustomerItemPrice(breakFastFee);
+                        customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
+                        customerReciept1->setCustomerProductCost(breakFastFee);
+                        customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
+                        customerReciept1->setProductAmount(productAmountSet);
+                        customerReciept1->setProductAmountWithCost(breakFastFee);
+                        customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
+
+                        customer1. customerObj();
                     break;
-                case Drinks:
-                    customerReciept1->setCustomerItemName("Coca cola");
-                    customerReciept1->setCustomerItemPrice(3.19);
-                    customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
-                    customerReciept1->setCustomerProductCost(drinksFee);
-                    customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
-                    customer1. customerObj();
+                    case Drinks:
+                        customerReciept1->setCustomerItemName("Coca cola");
+                        customerReciept1->setCustomerItemPrice(drinksFee);
+                        customerReciept1->setCustomerTicketStatus("Pending order, confirm first");
+                        customerReciept1->setCustomerProductCost(drinksFee);
+                        customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
+                        customerReciept1->setProductAmount(productAmountSet);
+                        customerReciept1->setProductAmountWithCost(drinksFee);
+                        customerReciept1->setGiveCustomerAdmissionFee(admissionFee);
+
+                        customer1. customerObj();
+                    };
+
                 };
+        }while(productAmountSet <= 0 || productAmountSet >= 100);
 
 
-    // # To exit the program by confirming or cancelling, The customer order.
+        /// # To exit the program by confirming or cancelling, The customer order.
 
 
         do{
 
+            try{
             std::cout << "**********************************" << '\n';
             std::cout << "Confirm order: ";
             std::cin >> cco;
@@ -209,9 +173,14 @@ int main() {
                 };
 
                     if(cco != y && cco != n){
-                        std::cout << "Error xf5987; Invalid command!\n" << '\n';
+                        throw 0;
                     }
+            }catch(...){
+                std::cout << "Error; Invalid command!\n" << '\n';
+            }
+
         }while(cco != y && cco != n);
+
 
         do{
 
